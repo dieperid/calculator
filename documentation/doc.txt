@@ -1,0 +1,117 @@
+_WaitKey
+
+Attend la pression d'une touche du clavier.
+[01] [08] [03]	CALL H'803
+in	-
+out	A touche pressée
+mod	A, F
+
+_WaitSec
+
+Attend un nombre de demi-secondes. L'attente est approximativement calibrée à 1'000 IPS.
+[01] [08] [06]	CALL H'806
+in	A nombre de secondes
+out	-
+mod	F
+
+_DisplayBinaryDigit
+
+Affiche des segments à choix.
+[01] [08] [09]	CALL H'809
+in	A bits des segments à allumer
+	B digit 0..3 (de gauche à droite)
+out	-
+mod	F
+
+_DisplayHexaDigit
+
+Affiche un digit hexadécimal.
+[01] [08] [0C]	CALL H'80C
+in	A valeur 0..15
+	B digit 0..3 (de gauche à droite)
+out	-
+mod	F
+
+_DisplayHexaByte
+
+Affiche un octet hexadécimal sur deux digits.
+[01] [08] [0F]	CALL H'80F
+in	A valeur 0..255
+	B premier digit 0..2 (de gauche à droite)
+out	-
+mod	F
+
+_ClearScreen
+
+Efface tout l'écran bitmap.
+[01] [08] [1E]	CALL H'81E
+in	-
+out	-
+mod	F
+
+_SetPixel
+
+Allume un pixel dans l'écran bitmap.
+[01] [08] [15]	CALL H'815
+in	X coordonnée colonne 0..31
+	Y coordonnée ligne 0..23
+out	-
+mod	F
+
+_ClrPixel
+
+Eteint un pixel dans l'écran bitmap.
+[01] [08] [18]	CALL H'818
+in	X coordonnée colonne 0..31
+	Y coordonnée ligne 0..23
+out	-
+mod	F
+
+_NotPixel
+
+Inverse un pixel dans l'écran bitmap.
+[01] [08] [1B]	CALL H'81B
+in	X coordonnée colonne 0..31
+	Y coordonnée ligne 0..23
+out	-
+mod	F
+
+_TestPixel
+
+Teste l'état d'un pixel dans l'écran bitmap.
+[01] [08] [2A]	CALL H'82A
+in	X coordonnée colonne 0..31
+	Y coordonnée ligne 0..23
+out	EQ si le pixel est éteint
+	NE si le pixel est allumé
+mod	F
+
+_DrawChar
+
+Dessine un caractère dans l'écran bitmap. Les chiffres sont codés de 30 à 39, et les lettres de 41 à 5A.
+[01] [08] [21]	CALL H'821
+in	A caractère ascii
+	X colonne 0..7
+	Y ligne 0..3
+out	-
+mod	F
+
+_DrawHexaDigit
+
+Dessine un digit hexadécimal dans l'écran bitmap.
+[01] [08] [24]	CALL H'824
+in	A valeur 0..15
+	X colonne 0..7
+	Y ligne 0..3
+out	-
+mod	F
+
+_DrawHexaByte
+
+Dessine un octet hexadécimal sur deux digits dans l'écran bitmap.
+[01] [08] [27]	CALL H'827
+in	A valeur 0..255
+	X colonne 0..6
+	Y ligne 0..3
+out	-
+mod	F
