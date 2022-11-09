@@ -62,12 +62,12 @@ DRAW_NUMBERS:
 	JUMP	LOOP	; retour à la boucle de départ
 
 DRAW_RESULT:
-	COMP	#0, BOOL_RESULT_DRAWED
+	COMP	#0, BOOL_RESULT_DRAWED	; si le résultat à déjà été écrit on retourne dans LOOP
 	JUMP,NE	LOOP
 	MOVE	#22, X
 	MOVE	#15, Y
-	MOVE	{SP}+RESULT, A
-	CALL _DrawHexaByte
+	MOVE	{SP}+RESULT, A	; déplace le résultat dans A pour pouvoir l'écrire
+	CALL _DrawHexaByte	; ECRIT LE RESULTAT EN HEXADECIMAL PAS EN DECIMAL !!!
 	INC	BOOL_RESULT_DRAWED
 	JUMP LOOP
 
@@ -80,17 +80,17 @@ ADD_FIRST_NUMBER:
 	SUB	#H'30, B
 	ADD	#1, NB_DIGIT
 	COMP	#0,OPERATOR_VALUE
-	JUMP,EQ	ADD_NBONE_FIRSTDIGIT
+	JUMP,EQ	ADD_NBONE_FIRSTDIGIT	; ajout du premier digit du premier nombre dans le stackpointer NBONE
 	COMP	#0,OPERATOR_VALUE
-	JUMP,NE	ADD_NBTWO_FIRSTDIGIT
+	JUMP,NE	ADD_NBTWO_FIRSTDIGIT	; ajout du premier digit du deuxième nombre dans le stackpointer NBONE
 
 ADD_SECOND_NUMBER:
 	ADD	#1, NB_DIGIT
 	SUB	#H'30, B
 	COMP	#0,OPERATOR_VALUE
-	JUMP,EQ	ADD_NBONE_SECDIGIT
+	JUMP,EQ	ADD_NBONE_SECDIGIT	; ajout du deuxième digit du premier nombre dans le stackpointer NBONE
 	COMP	#0,OPERATOR_VALUE
-	JUMP,NE	ADD_NBTWO_SECDIGIT
+	JUMP,NE	ADD_NBTWO_SECDIGIT	; ajout du deuxième digit du deuxième nombre dans le stackpointer NBONE
 
 ADD_NBONE_FIRSTDIGIT:
 	MOVE	B,	{SP}+NBONE	; met la valeur de X dans NBONE
@@ -115,13 +115,13 @@ ADD_NBTWO_SECDIGIT:
 	MOVE	#0, B	; réinitialisation de B
 	MOVE	#0, H'C07	; réinitialisation de l'adresse H'C07
 	COMP	#1,	OPERATOR_VALUE
-	JUMP,EQ	STORE_ADD_RESULT
+	JUMP,EQ	STORE_ADD_RESULT	; stock le résultat de l'addition
 	COMP	#2,	OPERATOR_VALUE
-	JUMP,EQ	STORE_SUB_RESULT
+	JUMP,EQ	STORE_SUB_RESULT	; stock le résultat de la soustraction
 	COMP	#3,	OPERATOR_VALUE
-	JUMP,EQ	STORE_MULTIPLY_RESULT
+	JUMP,EQ	STORE_MULTIPLY_RESULT	; stock le résultat de la multiplication
 	COMP	#4,	OPERATOR_VALUE
-	JUMP,EQ	STORE_DIVISION_RESULT
+	JUMP,EQ	STORE_DIVISION_RESULT	; stock le résultat de la division
 	JUMP	LOOP	; retour à la boucle de départ
 
 MULTIPLY_TEN:
